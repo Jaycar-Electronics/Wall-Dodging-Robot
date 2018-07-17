@@ -38,7 +38,7 @@ moving backwards unexpectedly , just swap the motor wires around.
 
 ## Software Libraries
 |Library | Author
-| --- |
+| --- | --- |
 | N/A | N/A |
 
 ## Assembly
