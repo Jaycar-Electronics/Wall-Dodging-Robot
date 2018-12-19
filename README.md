@@ -84,7 +84,7 @@ We used plenty of blue tac to mount our Arduino board to the chassis, as can be 
 ![](images/NPI00001g.png)
 
 ### 6. Mount the battery holder
-Insert five AA batteries in the battery holder, you will insert the sixth batter at the very end, when you’re ready to run your robot. We used blue tac to mount the battery holder to the back of the robot chassis, as shown below. Once the battery holder is mounted, you will need to connect the battery power wires (red-5V, and black-GND) to the Motor controller, using a screw driver loosen the terminal marked GND, insert the black wire from the battery holder to this terminal. Now repeat the same for the red wire, only this time insert the red wire into the terminal marked 5V.
+Insert five AA batteries in the battery holder, you will insert the sixth batter at the very end, when you’re ready to run your robot. We used blue tac to mount the battery holder to the back of the robot chassis, as shown below. Once the battery holder is mounted, you will need to connect the battery power wires (red-VMS, and black-GND) to the Motor controller, using a screw driver loosen the terminal marked GND, insert the black wire from the battery holder to this terminal. Now repeat the same for the red wire, only this time insert the red wire into the terminal marked VMS.
 
 ![](images/NPI00001h.png)
 
