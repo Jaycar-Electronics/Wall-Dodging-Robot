@@ -72,10 +72,8 @@ The overall robotic platform is pretty easy to understand. we are using a batter
 We've broken the assembly instructions into different sections so you can jump around if you need to:
 
 - [USB connector](#USB-connector)
-
 - [Assembling the Chassis](#Assembling-the-Chassis)
 - [Positing components and placing the switch](#Positing-components-and-placing-the-switch)
-- [Connecting the UNO/Motor controller](#Connecting-the-UNOMotor-controller)
 
 ### USB connector
 
