@@ -1,56 +1,29 @@
-
 // Wall Doding robot code
-// Written by D.West
-// Jaycar Electronics 2019
+// Jaycar Electronics 2020
 
-const int aChannelEnable = 3; //PWM pin
-const int bChannelEnable = 9; //PWM pin
+#include <AFMotor.h>
 
-const int inA1 = 7;
-const int inA2 = 6;
+const int ldr_pin = A5;
+const int trigger_pin = A4;
+const int echo_pin = A3;
 
-const int inB1 = 5;
-const int inB2 = 4;
+const int light_threshold = 600;
+const int sonar_threshold = 200;
 
-#define ULTRASONIC_VCC 11
-
-//ultrasonic trigger and echo
-const int usTrigger = 12;   //output
-const int usEcho = 13;      //input
-const int lightSensor = A0; //analog input
-
-const int motorSpeed = 125;
-
-const int lightShutoffLevel = 600;
-const int sonarThreshhold = 200;
-
-// ----------------------------------------------------
+AF_DCMotor left_motor(4);
+AF_DCMotor right_motor(3);
 
 void setup()
 {
+  Serial.begin(9600);
+  Serial.println("Robot Starting!");
 
-  Serial.begin(115200);
-  Serial.println("OK");
+  pinMode(ldr_pin, INPUT);
+  pinMode(trigger_pin, OUTPUT);
+  pinMode(echo_pin, INPUT); 
 
-  //motor controller pins
-  pinMode(aChannelEnable, OUTPUT); //output from the arduino -> motor controller
-  pinMode(bChannelEnable, OUTPUT);
-  pinMode(inA1, OUTPUT);
-  pinMode(inA2, OUTPUT);
-  pinMode(inB1, OUTPUT);
-  pinMode(inB2, OUTPUT);
+  Serial.println("Robot OK!");
 
-  // ------------ drive the VCC high, kinda hacky.
-  pinMode(ULTRASONIC_VCC, OUTPUT);
-  digitalWrite(ULTRASONIC_VCC, HIGH);
-  // ---------------------------------
-
-  //sensors and inputs
-  pinMode(usTrigger, OUTPUT);
-  pinMode(usEcho, INPUT);
-  pinMode(lightSensor, INPUT);
-
-  Serial.println("Robot ready to go!");
 }
 
 void loop()
@@ -58,11 +31,9 @@ void loop()
   delay(100);
 
   //check if the lights are on
-  if (analogRead(lightSensor) < lightShutoffLevel)
+  if (analogRead(ldr_pin) < light_threshold)
   {
-
-    setMotorSpeed('A', 0);
-    setMotorSpeed('B', 0);
+    stop();
     blinkErrorMessage();
     //return as we don't want to do more in the loop function
     return;
@@ -70,16 +41,19 @@ void loop()
 
   // check distance of what's in front of us
   // (closer objects are lower values)
-  if (sonarPing() < sonarThreshhold)
+  if (sonarPing() < sonar_threshold)
   {
     //turn around;
-    driveBackward();
-    reverseTurn();
+    stop();
+    driveBackward(800);
+    reverseTurn(400);
+    stop();
   }
 
   //drive forward
   driveForward();
 }
+// ===============================================================
 
 // ----------------------------------------------------
 // blinkErrorMessage function
@@ -109,77 +83,43 @@ void blinkErrorMessage()
 //   These just set the correct motor values to drive the bot
 void driveForward()
 {
-
-  setMotorSpeed('A', motorSpeed);
-  setMotorSpeed('B', motorSpeed);
+  left_motor.run(FORWARD);
+  right_motor.run(FORWARD);
+  left_motor.setSpeed(255);
+  right_motor.setSpeed(255);
 }
-void driveBackward()
+void driveBackward(long time)
 {
-  setMotorSpeed('A', -motorSpeed);
-  setMotorSpeed('B', -motorSpeed);
-  delay(500); //drive for half a second
+  left_motor.run(BACKWARD);
+  right_motor.run(BACKWARD);
+  left_motor.setSpeed(255);
+  right_motor.setSpeed(255);
+  delay(time); //drive backwards for half a second
 }
-
-void reverseTurn()
+void stop(){
+  left_motor.setSpeed(0);
+  right_motor.setSpeed(0);
+  delay(500); //stop for half a second, allow motors to wind down
+}
+void reverseTurn(long time)
 {
-
-  setMotorSpeed('A', 0);
-  setMotorSpeed('B', -motorSpeed);
-  delay(1000); //turn for 1 second, overshoots a bit but that's ok
+  left_motor.run(FORWARD);
+  right_motor.run(BACKWARD);
+  left_motor.setSpeed(0);
+  right_motor.setSpeed(255);
+  delay(time); //turn for 1 second, overshoots a bit but that's ok
 }
 
 // -------------------------------------------------------------
 // sonarPing function
 //    This measures the distance (in milimeters) to the object infront of it
-
 unsigned long sonarPing()
 {
-
   //send a pulse and time how long it takes to come back.
-
-  digitalWrite(usTrigger, HIGH);
+  digitalWrite(trigger_pin, HIGH);
   delayMicroseconds(10);
-  digitalWrite(usTrigger, LOW);
+  digitalWrite(trigger_pin, LOW);
 
-  unsigned long duration = pulseIn(usEcho, HIGH);
-
-  return duration * 0.17; //convert microseconds to milimeters; (speed of sound);
-}
-
-// ----------------------------------------------------------------
-// setMotorSpeed function
-//   This writes PWM values to the motor controller for the correct motor
-
-void setMotorSpeed(char motor, int speed)
-{
-
-  bool reverse = false;
-
-  if (speed < 1)
-  {
-    reverse = true;
-  }
-
-  if (motor == 'a' || motor == 'A')
-  {
-    digitalWrite(inA1, reverse ? HIGH : LOW);
-    digitalWrite(inA2, reverse ? LOW : HIGH);
-
-    //we only send positive values to analogWrite function
-    analogWrite(aChannelEnable, abs(speed));
-  }
-  else if (motor == 'b' || motor == 'B')
-  {
-    digitalWrite(inB1, reverse ? HIGH : LOW);
-    digitalWrite(inB2, reverse ? LOW : HIGH);
-
-    //we only send positive values to analogWrite function
-    analogWrite(bChannelEnable, abs(speed));
-  }
-  else
-  {
-    Serial.print("Wrong motor char, not sure what '");
-    Serial.print(motor);
-    Serial.println("' is");
-  }
+  unsigned long duration = pulseIn(echo_pin, HIGH);
+  return duration * 0.17; //convert microseconds to millimeters; (speed of sound);
 }
