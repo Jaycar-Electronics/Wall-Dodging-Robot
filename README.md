@@ -53,7 +53,7 @@ There's a lot more that this little robot can do, check out the [Exploration](#E
 
 ## Connection Table
 
-The motor controller ([XC4472](https://jaycar.com.au/p/XC4472)) fits directly ontop of the uno so you don't have to worry about the pinout of the motor connections. The LDR and ultrasonic sensor ([XC4446](https://jaycar.com.au/p/XC4446) and [XC4442](https://jaycar.com.au/p/XC4442)) connect into the analogue pins on the motor shield, which don't have headers, but we can just solder them in with the [HM3211](https://jaycar.com.au/p/HM3211) vertical headers.
+The motor controller ([XC4472](https://jaycar.com.au/p/XC4472)) fits directly on-top of the uno so you don't have to worry about the pinout of the motor connections. The LDR and ultrasonic sensor ([XC4446](https://jaycar.com.au/p/XC4446) and [XC4442](https://jaycar.com.au/p/XC4442)) connect into the analogue pins on the motor shield, which don't have headers, but we can just solder them in with the [HM3211](https://jaycar.com.au/p/HM3211) vertical headers.
 
 | UNO (shield) | Device          |
 | ------------ | --------------- |
@@ -133,9 +133,9 @@ We'll do this to both sides, so that they are opposing, with the top screw-mount
 
 You'll find that there's only one real spot where the wheels will actually attach, and you can use the smaller screws to attach the motors to that point.
 
-![positioning motors](images/position.jpg)
+![positioning motors](images/position.jpg)  
 
-The gimbal wheel goes near the flat end of the robotic platform, and you can use the broad-headed screws to mount the wheel to the small brass spacers in the kit, like such:
+The trolley wheel goes near the flat end of the robotic platform, and you can use the broad-headed screws to mount the wheel to the small brass spacers in the kit, like such:
 
 ![mounting wheel](images/mounting-wheel.jpg)
 
@@ -196,7 +196,7 @@ Connect the motors to the motor ports (M3 and M4) then connect the battery bank 
 
 ### Attaching the sensors
 
-Next is just the ultrasonic and LDR sensors, which can be placed wherever you wish. Connect the `VCC` and `GND` from each sensor to the `5V` and `GND` on the motor shield, from the header connections that were soldered on previously, then connect the `S`, `TRIG`, and `ECHO` wires to the analog pins.
+Next is just the ultrasonic and LDR sensors, which can be placed wherever you wish. Connect the `VCC` and `GND` from each sensor to the `5V` and `GND` on the motor shield, from the header connections that were soldered on previously, then connect the `S`, `TRIG`, and `ECHO` wires to the analogue pins.
 
 ![topside](images/top.jpg)
 
