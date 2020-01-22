@@ -10,7 +10,10 @@ There's a lot more that this little robot can do, check out the [Exploration](#E
 
 ![hero](images/hero.jpg)
 
+## Table of Contents
+
 - [Wall Dodging Robot](#Wall-Dodging-Robot)
+  - [Table of Contents](#Table-of-Contents)
   - [Bill of Materials](#Bill-of-Materials)
     - [You might also want](#You-might-also-want)
   - [Connection Table](#Connection-Table)
