@@ -8,6 +8,8 @@ This is the updated version! codename `Mini-Tesla` - it now has a rechargeable L
 
 There's a lot more that this little robot can do, check out the [Exploration](#Exploration) section for more ideas once you have finished off the build.
 
+![hero](images/hero.jpg)
+
 - [Wall Dodging Robot](#Wall-Dodging-Robot)
   - [Bill of Materials](#Bill-of-Materials)
     - [You might also want](#You-might-also-want)
