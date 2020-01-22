@@ -63,6 +63,8 @@ Be sure to connect all of the 5V to the 5V pins, and the GND to GND pins.
 
 ## System Overview
 
+![system](images/system.png)
+
 The overall robotic platform is pretty easy to understand. we are using a battery to power the entire system by jacking into the motor controller. This means we have the most amount of current (which with lithium ion - could be a lot!) goes to the motors when we want it to. The LDR and ultrasonic sensor plug into the motor shield but they actually just get passed and controlled by the UNO underneath.
 
 ## Assembly
