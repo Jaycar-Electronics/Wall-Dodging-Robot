@@ -4,14 +4,20 @@
 #include <AFMotor.h>
 
 const int ldr_pin = A5;
-const int trigger_pin = A4;
+const int trigger_pin = A2;
 const int echo_pin = A3;
 
-const int light_threshold = 600;
+const int light_threshold = 700;
 const int sonar_threshold = 200;
 
 AF_DCMotor left_motor(4);
 AF_DCMotor right_motor(3);
+
+void reverseTurn(long);
+void driveForward(long time = 0);
+void driveBackward(long);
+void blinkErrorMessage();
+void stop();
 
 void setup()
 {
@@ -29,8 +35,16 @@ void loop()
 {
   delay(100);
 
+  int ldrReading = analogRead(ldr_pin);
+  long sonarDistance = sonarPing();
+  
+  Serial.print("LDR Reading: ");
+  Serial.println(ldrReading, DEC);
+  Serial.print("Distance Reading: ");
+  Serial.println(sonarDistance, DEC);
+  
   //check if the lights are on
-  if (analogRead(ldr_pin) < light_threshold)
+  if (ldrReading < light_threshold)
   {
     stop();
     blinkErrorMessage();
@@ -40,12 +54,12 @@ void loop()
 
   // check distance of what's in front of us
   // (closer objects are lower values)
-  if (sonarPing() < sonar_threshold)
+  if (sonarDistance < sonar_threshold)
   {
     //turn around;
     stop();
     driveBackward(800);
-    reverseTurn(400);
+    reverseTurn(800);
     stop();
   }
 
@@ -81,7 +95,7 @@ void blinkErrorMessage()
 // motion functions
 //   These just set the correct motor values to drive the bot
 
-void driveForward(long time = 0)
+void driveForward(long time)
 {
   left_motor.run(FORWARD);
   right_motor.run(FORWARD);
@@ -103,7 +117,7 @@ void stop()
   right_motor.setSpeed(0);
   delay(500); //stop for half a second, allow motors to wind down
 }
-void reverseTurn(long time = 400)
+void reverseTurn(long time)
 {
   left_motor.run(FORWARD);
   right_motor.run(BACKWARD);
