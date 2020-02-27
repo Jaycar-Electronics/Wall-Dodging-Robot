@@ -20,10 +20,9 @@ void setup()
 
   pinMode(ldr_pin, INPUT);
   pinMode(trigger_pin, OUTPUT);
-  pinMode(echo_pin, INPUT); 
+  pinMode(echo_pin, INPUT);
 
   Serial.println("Robot OK!");
-
 }
 
 void loop()
@@ -81,12 +80,14 @@ void blinkErrorMessage()
 // --------------------------------------------------------
 // motion functions
 //   These just set the correct motor values to drive the bot
-void driveForward()
+
+void driveForward(long time = 0)
 {
   left_motor.run(FORWARD);
   right_motor.run(FORWARD);
   left_motor.setSpeed(255);
   right_motor.setSpeed(255);
+  delay(time);
 }
 void driveBackward(long time)
 {
@@ -96,18 +97,19 @@ void driveBackward(long time)
   right_motor.setSpeed(255);
   delay(time); //drive backwards for half a second
 }
-void stop(){
+void stop()
+{
   left_motor.setSpeed(0);
   right_motor.setSpeed(0);
   delay(500); //stop for half a second, allow motors to wind down
 }
-void reverseTurn(long time)
+void reverseTurn(long time = 400)
 {
   left_motor.run(FORWARD);
   right_motor.run(BACKWARD);
   left_motor.setSpeed(0);
   right_motor.setSpeed(255);
-  delay(time); //turn for 1 second, overshoots a bit but that's ok
+  delay(time);
 }
 
 // -------------------------------------------------------------
