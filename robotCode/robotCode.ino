@@ -13,6 +13,7 @@ const int sonar_threshold = 200;
 AF_DCMotor left_motor(4);
 AF_DCMotor right_motor(3);
 
+//define the functions so we can use them later.
 void reverseTurn(long);
 void driveForward(long time = 0);
 void driveBackward(long);
@@ -37,12 +38,12 @@ void loop()
 
   int ldrReading = analogRead(ldr_pin);
   long sonarDistance = sonarPing();
-  
+
   Serial.print("LDR Reading: ");
   Serial.println(ldrReading, DEC);
   Serial.print("Distance Reading: ");
   Serial.println(sonarDistance, DEC);
-  
+
   //check if the lights are on
   if (ldrReading < light_threshold)
   {
