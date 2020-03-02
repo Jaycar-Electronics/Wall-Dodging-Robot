@@ -14,11 +14,6 @@ AF_DCMotor left_motor(4);
 AF_DCMotor right_motor(3);
 
 //define the functions so we can use them later.
-void reverseTurn(long);
-void driveForward(long time = 0);
-void driveBackward(long);
-void blinkErrorMessage();
-void stop();
 
 void setup()
 {
@@ -96,13 +91,12 @@ void blinkErrorMessage()
 // motion functions
 //   These just set the correct motor values to drive the bot
 
-void driveForward(long time)
+void driveForward()
 {
   left_motor.run(FORWARD);
   right_motor.run(FORWARD);
   left_motor.setSpeed(255);
   right_motor.setSpeed(255);
-  delay(time);
 }
 void driveBackward(long time)
 {
