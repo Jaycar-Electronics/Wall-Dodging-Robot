@@ -1,5 +1,6 @@
 // Wall Doding robot code
 // Jaycar Electronics 2020
+// 9V battery version - startup delay, less turns (higher voltage = faster turns)
 
 #include <AFMotor.h>
 
@@ -13,12 +14,22 @@ const int sonar_threshold = 200;
 AF_DCMotor left_motor(4);
 AF_DCMotor right_motor(3);
 
+const int motor_speed = 150;
+
 //define the functions so we can use them later.
 
 void setup()
 {
   Serial.begin(9600);
   Serial.println("Robot Starting!");
+  Serial.println("Delay..");
+
+  for (int i = 5; i > 0; i--)
+  {
+    Serial.print(i, DEC);
+    Serial.println("...");
+    delay(1000);
+  }
 
   pinMode(ldr_pin, INPUT);
   pinMode(trigger_pin, OUTPUT);
@@ -55,7 +66,7 @@ void loop()
     //turn around;
     stop();
     driveBackward(800);
-    reverseTurn(800);
+    reverseTurn(400);
     stop();
   }
 
@@ -95,15 +106,15 @@ void driveForward()
 {
   left_motor.run(FORWARD);
   right_motor.run(FORWARD);
-  left_motor.setSpeed(255);
-  right_motor.setSpeed(255);
+  left_motor.setSpeed(motor_speed);
+  right_motor.setSpeed(motor_speed);
 }
 void driveBackward(long time)
 {
   left_motor.run(BACKWARD);
   right_motor.run(BACKWARD);
-  left_motor.setSpeed(255);
-  right_motor.setSpeed(255);
+  left_motor.setSpeed(motor_speed);
+  right_motor.setSpeed(motor_speed);
   delay(time); //drive backwards for half a second
 }
 void stop()
@@ -117,7 +128,7 @@ void reverseTurn(long time)
   left_motor.run(FORWARD);
   right_motor.run(BACKWARD);
   left_motor.setSpeed(0);
-  right_motor.setSpeed(255);
+  right_motor.setSpeed(motor_speed);
   delay(time);
 }
 
